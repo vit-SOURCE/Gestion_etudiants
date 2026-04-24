@@ -10,6 +10,18 @@
     
     // Récupérer les filières
     $filieres = $pdo->query("SELECT * FROM filieres")->fetchAll();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'];
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $filiere_id = $_POST['filiere_id'];
+    
+        $stmt = $pdo->prepare("UPDATE etudiants SET nom = ?, prenom = ?, filiere_id = ? WHERE id = ?");
+        $stmt->execute([$nom, $prenom, $filiere_id, $id]);
+    
+        header('Location: index.php');
+    }
 ?>
 
 <form action="update.php" method="POST">
@@ -25,17 +37,3 @@
     </select>
     <button type="submit">Modifier</button>
 </form>
-
-<?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = $_POST['id'];
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $filiere_id = $_POST['filiere_id'];
-    
-        $stmt = $pdo->prepare("UPDATE etudiants SET nom = ?, prenom = ?, filiere_id = ? WHERE id = ?");
-        $stmt->execute([$nom, $prenom, $filiere_id, $id]);
-    
-        header('Location: index.php');
-    }
-?>
