@@ -10,23 +10,7 @@
     
     // Récupérer les filières
     $filieres = $pdo->query("SELECT * FROM filieres")->fetchAll();
-?>
 
-<form action="update.php" method="POST">
-    <input type="hidden" name="id" value="<?= $etudiant['id'] ?>">
-    <input type="text" name="nom" value="<?= $etudiant['nom'] ?>">
-    <input type="text" name="prenom" value="<?= $etudiant['prenom'] ?>">
-    <select name="filiere_id">
-        <?php foreach($filieres as $f): ?>
-        <option value="<?= $f['id'] ?>" <?= $f['id'] == $etudiant['filiere_id'] ? 'selected' : '' ?>>
-            <?= $f['nom'] ?>
-        </option>
-        <?php endforeach; ?>
-    </select>
-    <button type="submit">Modifier</button>
-</form>
-
-<?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
         $nom = $_POST['nom'];
@@ -39,3 +23,18 @@
         header('Location: index.php');
     }
 ?>
+
+<form action="update.php" method="POST">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <input type="hidden" name="id" value="<?= $etudiant['id'] ?>">
+    <input type="text" name="nom" value="<?= $etudiant['nom'] ?>">
+    <input type="text" name="prenom" value="<?= $etudiant['prenom'] ?>">
+    <select name="filiere_id">
+        <?php foreach($filieres as $f): ?>
+        <option value="<?= $f['id'] ?>" <?= $f['id'] == $etudiant['filiere_id'] ? 'selected' : '' ?>>
+            <?= $f['nom'] ?>
+        </option>
+        <?php endforeach; ?>
+    </select>
+    <button type="submit">Modifier</button>
+</form>
